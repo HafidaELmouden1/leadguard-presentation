@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LeadGuard AI — dossier de présentation</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+
+<main class="app">
+  <section class="stage" id="stage" aria-live="polite">
+    <div class="hud" id="hud">
+        <span class="section">Ouverture</span>
+        <span class="counter">1 / 14</span>
+        <span class="progress"><i style="width:0"></i></span>
+        <button type="button" data-prev aria-label="Slide précédente">←</button>
+        <button type="button" data-next aria-label="Slide suivante">→</button>
+        <button type="button" onclick="location.hash='#/speaker/1'" title="Mode présentateur (s)">Présentateur</button>
+        <button type="button" onclick="location.hash='#/print'" title="Mode impression (p)">PDF</button>
+    </div>
+  </section>
+  <section class="print-stack" id="print" hidden></section>
+  <section class="notes-doc" id="notes-doc" hidden
+           style="position:fixed;inset:0;overflow:auto;background:#0b1120;padding:32px 40px"></section>
+
+</main>
+
+<noscript>
+  <p style="color:#fff;padding:24px">
+    Ce dossier a besoin de JavaScript. Les versions PDF restent disponibles :
+    <a style="color:#7dd3fc" href="../leadguard-ai-dossier.pdf">dossier</a>,
+    <a style="color:#7dd3fc" href="../leadguard-ai-lettre.pdf">lettre</a>.
+  </p>
+</noscript>
+
+<script type="module" src="deck.js"></script>
+</body>
+</html>

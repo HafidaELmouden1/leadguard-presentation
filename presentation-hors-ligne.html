@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>LeadGuard AI — dossier de présentation</title>
+<style>
+/* Design tokens — mesure de la marque : ce sont ceux de la console LeadGuard
+   (app/static/css/tokens.css), pas une palette inventée pour le deck. */
+
+:root {
+  --navy: #0f172a;
+  --navy-soft: #16213c;
+  --ink: #1e293b;
+  --muted: #64748b;
+  --blue: #2563eb;
+  --blue-soft: #e8efff;
+  --indigo: #4f46e5;
+  --cyan: #0891b2;
+  --violet: #7c3aed;
+  --green: #16a34a;
+  --green-soft: #dcfce7;
+  --amber: #d97706;
+  --amber-soft: #fef3c7;
+  --red: #dc2626;
+  --line: #e2e8f0;
+  --surface: #f6f8fc;
+  --paper: #ffffff;
+  --hud: 74px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #0b1120;
+  color: var(--ink);
+  font-family: Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------------------------------------------------------- la scène */
+
+.app {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.stage {
+  position: relative;
+  container-type: size;
+  aspect-ratio: 16 / 9;
+  width: min(100vw, calc((100vh - 0px) * 16 / 9));
+  height: min(calc(100vw * 9 / 16), 100vh);
+  background: var(--paper);
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(2, 6, 23, .55);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 6cqh 5.6cqw calc(var(--hud) + 4cqh);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--paper);
+}
+
+.slide[hidden] { display: none; }
+
+/* ------------------------------------------------------------- typographie */
+
+.kicker {
+  font-size: clamp(11px, 1.05cqw, 16px);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--blue);
+  margin: 0 0 1.6cqh;
+}
+
+h1 {
+  font-size: clamp(34px, 4.6cqw, 68px);
+  line-height: 1.04;
+  letter-spacing: -.02em;
+  color: var(--navy);
+  margin: 0 0 1.8cqh;
+}
+
+h2 {
+  font-size: clamp(26px, 3cqw, 46px);
+  line-height: 1.12;
+  letter-spacing: -.015em;
+  color: var(--navy);
+  margin: 0 0 2.2cqh;
+  max-width: 32ch;
+}
+
+p {
+  font-size: clamp(14px, 1.35cqw, 20px);
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0 0 1.4cqh;
+  max-width: 64ch;
+}
+
+.lead { font-size: clamp(16px, 1.6cqw, 24px); color: var(--ink); }
+.small { font-size: clamp(12px, 1.12cqw, 16px); }
+.tiny { font-size: clamp(11px, .95cqw, 13px); color: var(--muted); }
+.mono { font-family: "JetBrains Mono", ui-monospace, Consolas, monospace; font-size: .92em; }
+
+ul { margin: 0; padding-left: 2.2cqw; }
+li { font-size: clamp(13px, 1.25cqw, 18px); line-height: 1.5; color: var(--ink); margin-bottom: .8cqh; }
+li::marker { color: var(--blue); }
+
+strong { color: var(--navy); }
+
+/* ---------------------------------------------------------------- blocs */
+
+.row { display: flex; gap: 2cqw; align-items: flex-start; }
+.col { flex: 1; min-width: 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8cqw; align-items: start; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5cqw; align-items: start; }
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 1.1cqw;
+  padding: 2cqh 1.6cqw;
+  background: var(--paper);
+}
+.card.soft { background: var(--surface); border-color: #dbe4f3; }
+.card h3 {
+  font-size: clamp(13px, 1.3cqw, 19px);
+  margin: 0 0 .8cqh;
+  color: var(--navy);
+}
+.card p, .card li { font-size: clamp(12px, 1.1cqw, 15.5px); }
+
+.pill {
+  display: inline-block;
+  padding: .25cqh .8cqw;
+  border-radius: 999px;
+  font-size: clamp(10px, .95cqw, 13px);
+  font-weight: 650;
+  white-space: nowrap;
+}
+.pill.ok { background: var(--green-soft); color: #15803d; }
+.pill.warn { background: var(--amber-soft); color: #b45309; }
+.pill.info { background: #dbeafe; color: #1d4ed8; }
+.pill.mock { background: #ede9fe; color: #6d28d9; }
+.pill.off { background: #fee2e2; color: #b91c1c; }
+
+.quote {
+  border-left: .35cqw solid var(--blue);
+  padding: .6cqh 0 .6cqh 1.4cqw;
+  font-size: clamp(15px, 1.5cqw, 23px);
+  color: var(--navy);
+  line-height: 1.45;
+  margin: 0;
+  max-width: 58ch;
+}
+
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: left;
+  font-size: clamp(10px, .95cqw, 13px);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  padding: .9cqh .8cqw;
+  border-bottom: 1px solid var(--line);
+  font-weight: 700;
+}
+td {
+  padding: 1.1cqh .8cqw;
+  border-bottom: 1px solid #eef2f8;
+  font-size: clamp(12px, 1.1cqw, 16px);
+  vertical-align: top;
+  color: var(--ink);
+}
+td:first-child { white-space: nowrap; }
+
+.kpi { display: flex; gap: 1.2cqw; }
+.kpi > div {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 1cqw;
+  padding: 1.4cqh 1.2cqw;
+}
+.kpi b {
+  display: block;
+  font-size: clamp(22px, 2.6cqw, 40px);
+  color: var(--navy);
+  letter-spacing: -.02em;
+  line-height: 1.05;
+}
+.kpi span { font-size: clamp(11px, 1cqw, 14px); color: var(--muted); }
+
+.flow { display: flex; align-items: stretch; gap: .8cqw; }
+.step {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: .9cqw;
+  padding: 1.2cqh .9cqw;
+  background: var(--surface);
+}
+.step b { display: block; font-size: clamp(12px, 1.15cqw, 16px); color: var(--navy); margin-bottom: .5cqh; }
+.step span { font-size: clamp(10px, .95cqw, 13px); color: var(--muted); line-height: 1.35; display: block; }
+.step.hot { border-color: #bfdbfe; background: #f8fbff; }
+.arrow { align-self: center; color: #94a3b8; font-size: clamp(12px, 1.1cqw, 16px); }
+
+.shot { border: 1px solid var(--line); border-radius: .9cqw; overflow: hidden; }
+.shot img { display: block; width: 100%; }
+
+.title-slide {
+  background: linear-gradient(135deg, #0f172a 0%, var(--navy-soft) 55%, #1b2a54 100%);
+  justify-content: center;
+}
+.title-slide h1 { color: #fff; font-size: clamp(38px, 5.4cqw, 78px); }
+.title-slide p { color: #c7d2e5; }
+.title-slide .kicker { color: #7dd3fc; }
+.title-slide .tiny { color: #94a3b8; }
+
+.brand { display: flex; align-items: center; gap: 1cqw; margin-bottom: 3cqh; }
+.mark {
+  width: clamp(32px, 3cqw, 48px);
+  height: clamp(32px, 3cqw, 48px);
+  border-radius: .8cqw;
+  background: var(--blue);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: clamp(12px, 1.2cqw, 17px);
+}
+.brand-name { font-size: clamp(11px, 1.05cqw, 15px); letter-spacing: .05em; color: #c7d2e5; }
+
+/* ------------------------------------------------------------------- HUD */
+
+.hud {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: var(--hud);
+  display: flex;
+  align-items: center;
+  gap: 1.4cqw;
+  padding: 0 2.4cqw;
+  border-top: 1px solid var(--line);
+  background: rgba(255, 255, 255, .92);
+  backdrop-filter: blur(6px);
+  font-size: clamp(10px, .95cqw, 13px);
+  color: var(--muted);
+  z-index: 5;
+}
+.hud .section { text-transform: uppercase; letter-spacing: .12em; font-weight: 700; color: var(--blue); }
+.hud .progress { flex: 1; height: 4px; background: #e8edf6; border-radius: 999px; overflow: hidden; }
+.hud .progress i { display: block; height: 100%; width: 0; background: var(--blue); transition: width .25s ease; }
+.hud .counter { font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 650; }
+.hud button {
+  font: inherit;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  border-radius: .5cqw;
+  padding: .5cqh .9cqw;
+  cursor: pointer;
+}
+.hud button:hover { border-color: #bfdbfe; background: #f8fbff; }
+.hud button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* ---------------------------------------------------------------- modes */
+
+body.speaker .app {
+  display: flex;
+  align-items: stretch;
+  gap: 18px;
+  padding: 18px;
+  height: 100vh;
+}
+body.speaker .stage {
+  flex: 1.6;
+  width: auto;
+  height: auto;
+  max-height: 100%;
+}
+body.speaker .notes-panel { flex: 1; max-width: 460px; }
+
+.notes-panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px 20px;
+  overflow: auto;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.notes-panel h3 { margin: 0 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: .1em; color: var(--blue); }
+.notes-panel p { font-size: 14px; color: var(--ink); max-width: none; }
+.notes-panel .key { border-left: 3px solid var(--violet); padding-left: 12px; font-weight: 600; }
+.notes-panel ul { padding-left: 18px; }
+.notes-panel li { font-size: 13.5px; }
+
+.timer {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #fff;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+  font-weight: 600;
+  z-index: 20;
+}
+.timer.warn { background: #b45309; }
+.timer.over { background: #b91c1c; }
+
+/* ------------------------------------------------------------------ print */
+
+body.print {
+  background: #fff;
+  overflow: visible;
+}
+body.print .app { display: block; height: auto; }
+body.print .stage { display: none; }
+body.print .print-stack { display: block; }
+
+.print-slide {
+  position: relative;
+  width: 1280px;
+  height: 720px;
+  margin: 0 auto;
+  page-break-after: always;
+  break-after: page;
+  background: #fff;
+  overflow: hidden;
+}
+.print-slide:last-child { page-break-after: auto; }
+
+@page { size: 1280px 720px; margin: 0; }
+
+@media print {
+  html, body { background: #fff; }
+  .hud, .timer, .notes-panel { display: none !important; }
+  .print-slide { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main class="app">
+  <section class="stage" id="stage" aria-live="polite">
+    <div class="hud" id="hud">
+      <span class="section">Ouverture</span>
+      <span class="counter">1 / 14</span>
+      <span class="progress"><i style="width:0"></i></span>
+      <button type="button" data-prev aria-label="Slide précédente">←</button>
+      <button type="button" data-next aria-label="Slide suivante">→</button>
+      <button type="button" onclick="location.hash='#/speaker/1'" title="Mode présentateur (s)">Présentateur</button>
+      <button type="button" onclick="location.hash='#/print'" title="Mode impression (p)">PDF</button>
+    </div>
+  </section>
+  <section class="print-stack" id="print" hidden></section>
+  <section class="notes-doc" id="notes-doc" hidden style="position:fixed;inset:0;overflow:auto;background:#0b1120;padding:32px 40px"></section>
+</main>
+<script type="module">
+// ---- données (slides.js) ----
+
+/**
+ * Contenu des slides. Un fichier pour tout ce qui se lit : durées, sections,
+ * titres. Le rendu vit dans deck.js, les notes dans notes.js.
+ *
+ * Règle de rédaction : une idée par slide, des verbes précis, et pour chaque
+ * brique d'architecture ce qu'elle fait *et* ce qu'elle ne fait jamais.
+ */
+
+const node = (title, detail, hot = false) =>
+  `<div class="step${hot ? " hot" : ""}"><b>${title}</b><span>${detail}</span></div>`;
+
+const arrow = '<div class="arrow">→</div>';
+
+const card = (title, body, soft = true) =>
+  `<div class="card${soft ? " soft" : ""}"><h3>${title}</h3><p class="small" style="margin:0">${body}</p></div>`;
+
+const pill = (label, tone) => `<span class="pill ${tone}">${label}</span>`;
+
+const SLIDES = [
+  {
+    id: "ouverture",
+    tone: "dark",
+    section: "Ouverture",
+    title: "LeadGuard AI",
+    seconds: 25,
+    html: () => `
+      <div class="brand">
+        <div class="mark">LG</div>
+        <div class="brand-name">AI Integration &amp; Quality Control Center</div>
+      </div>
+      <h1>LeadGuard AI</h1>
+      <p class="lead" style="font-size:clamp(17px,1.85cqw,28px);max-width:42ch">
+        Qualifier chaque demande, la faire valider par un humain, la suivre
+        jusqu’au chantier — et prouver chaque étape.
+      </p>
+      <p class="tiny" style="margin-top:3cqh">
+        Hafida El-Mouden · Développeuse Full Stack Python · PoC personnel, données synthétiques
+      </p>`,
+  },
+  {
+    id: "probleme",
+    section: "Contexte",
+    title: "Une demande se perd entre le formulaire, le téléphone et le CRM",
+    seconds: 45,
+    html: () => `
+      <p class="kicker">Le problème</p>
+      <h2>Une demande entrante se perd entre le formulaire, le téléphone et le CRM</h2>
+      <div class="grid3">
+        ${card("Réponse lente", "Un lead de rénovation contacté en 48 h est déjà chez un concurrent. Le SLA promis est de 30 minutes.")}
+        ${card("Qualification inégale", "Selon qui répond, le budget, la surface ou l’urgence ne sont pas demandés. La visite technique se planifie parfois sur un dossier vide.")}
+        ${card("Aucune preuve", "Quand un lead est perdu, personne ne sait s’il n’a jamais été qualifié, s’il a été oublié, ou si le CRM a échoué.")}
+      </div>
+      <p class="quote" style="margin-top:3.4cqh">
+        « Un CRM dit ce qui s’est passé. Il ne dit pas si la décision était juste,
+        ni si l’intégration a tenu. »
+      </p>`,
+  },
+  {
+    id: "positionnement",
+    section: "Positionnement",
+    title: "Ce n’est pas un second CRM",
+    seconds: 40,
+    html: () => `
+      <p class="kicker">Le positionnement</p>
+      <h2>Ce n’est pas un second CRM</h2>
+      <div class="row">
+        <div class="card col" style="flex:.9">
+          <h3 style="color:var(--muted)">GoHighLevel garde</h3>
+          <ul class="small">
+            <li>contacts, champs, tags</li>
+            <li>opportunités et pipelines</li>
+            <li>notes, tâches, calendriers</li>
+            <li>workflows CRM</li>
+          </ul>
+        </div>
+        <div class="card col" style="border-color:#bfdbfe;background:#f8fbff">
+          <h3 style="color:var(--blue)">LeadGuard ajoute</h3>
+          <ul class="small">
+            <li>analyse IA + décision par règles</li>
+            <li>idempotence et reprise sur erreur</li>
+            <li>revue humaine obligatoire</li>
+            <li>parcours visite → estimé → transfert</li>
+            <li>Quality Guardian, audit, métriques</li>
+          </ul>
+        </div>
+      </div>
+      <p class="tiny" style="margin-top:2cqh">
+        L’atelier reste maître de l’exécution des travaux. LeadGuard ne garde que les données d’intégration.
+      </p>`,
+  },
+  {
+    id: "architecture",
+    section: "Architecture",
+    title: "Chaque brique a une frontière",
+    seconds: 50,
+    html: () => `
+      <p class="kicker">Architecture</p>
+      <h2>Trois couches, un seul point de décision</h2>
+      <div class="flow">
+        ${node("Formulaire / appel", "GoHighLevel capture la demande, rien de plus")}
+        ${arrow}
+        ${node("n8n", "orchestre le flux, ne décide pas")}
+        ${arrow}
+        ${node("FastAPI", "valide, décide, trace — seule brique qui choisit la route", true)}
+        ${arrow}
+        ${node("PostgreSQL", "événements, analyses, preuves")}
+      </div>
+      <div class="grid3" style="margin-top:3cqh">
+        ${card("LLM : DeepSeek", "extrait une structure — n’accorde jamais une qualification, ne produit aucun prix")}
+        ${card("Secours : GLM", "bascule automatique, la panne est un cas normal et se voit")}
+        ${card("Mock-first", "même code et mêmes tests, CRM simulé ou sandbox réelle")}
+      </div>
+      <p class="quote" style="margin-top:2.6cqh">Le LLM propose une extraction. Le code Python décide.</p>`,
+  },
+  {
+    id: "parcours",
+    section: "Parcours",
+    title: "De la demande au chantier, en six étapes",
+    seconds: 50,
+    html: () => `
+      <p class="kicker">Le parcours</p>
+      <h2>De la demande au chantier, en six étapes suivies</h2>
+      <table>
+        <tr><th>#</th><th>Étape</th><th>Ce qui est garanti</th></tr>
+        <tr><td><strong>1</strong></td><td>Qualification</td><td>règles déterministes : ville, service, consentement, budget déclaré, doublons</td></tr>
+        <tr><td><strong>2</strong></td><td>Revue humaine</td><td>aucun lead douteux ne part sans décision nominative tracée</td></tr>
+        <tr><td><strong>3</strong></td><td>Visite de site</td><td>un seul créneau actif ; un retard est signalé par le Guardian</td></tr>
+        <tr><td><strong>4</strong></td><td>Estimé</td><td>montant saisi par un humain ; envoi impossible sans approbation</td></tr>
+        <tr><td><strong>5</strong></td><td>Opportunité acceptée</td><td>réponse client enregistrée, rien n’est supprimé</td></tr>
+        <tr><td><strong>6</strong></td><td>Transfert atelier</td><td>seul un estimé accepté part ; échec tracé et rejouable</td></tr>
+      </table>
+      <p class="tiny" style="margin-top:1.6cqh">
+        Chaque transition écrit une ligne d’audit avec son acteur : la démo est reproductible, pas racontée.
+      </p>`,
+  },
+  {
+    id: "garde-fous",
+    section: "Garde-fous",
+    title: "Ce que le système s’interdit",
+    seconds: 45,
+    html: () => `
+      <p class="kicker">Garde-fous</p>
+      <h2>Ce que le système s’interdit</h2>
+      <div class="grid2">
+        ${card("Aucun prix", "Le schéma d’analyse n’a pas de champ pour un prix, une remise ou une taxe. Le montant d’un estimé est tapé par un humain.", false)}
+        ${card("Aucun message client", "<span class='mono'>ENABLE_OUTBOUND_MESSAGES=false</span> : l’envoi d’un estimé produit une trace, aucun courriel ne part.", false)}
+        ${card("Validation humaine", "Approbation nominative avant tout envoi ou transfert ; le nom du valideur est dans l’audit.", false)}
+        ${card("Idempotence", "Clé unique en base : un webhook rejoué ne crée ni doublon ni second contact.", false)}
+      </div>
+      <p class="quote" style="margin-top:2.6cqh">
+        Une injection de prompt ne change pas la décision : elle déclenche une revue de sécurité.
+      </p>`,
+  },
+  {
+    id: "preuve",
+    section: "Preuve",
+    title: "Branché sur un sous-compte réel",
+    seconds: 50,
+    html: () => `
+      <p class="kicker">Preuve · GoHighLevel</p>
+      <h2>Branché sur un sous-compte réel, pas sur une maquette</h2>
+      <div class="row">
+        <div class="col">
+          <div class="kpi" style="flex-direction:column;gap:1.2cqh">
+            <div><b>14</b><span>étapes dans le pipeline « Construction Sales »</span></div>
+            <div><b>19</b><span>champs personnalisés <span class="mono">leadguard_*</span></span></div>
+            <div><b>8</b><span>tags posés par l’intégration</span></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card soft">
+            <h3>Un lead réel, vérifié par API</h3>
+            <ul class="small" style="margin-top:1cqh">
+              <li>contact créé, <strong>10 tags</strong>, <strong>18 champs</strong> remplis</li>
+              <li>opportunité placée à <strong>Site Visit To Schedule</strong></li>
+              <li>note d’analyse + tâche « [URGENT] qualifier le lead »</li>
+              <li>le même code tourne en mode simulé, sans GHL</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p class="tiny" style="margin-top:2cqh">
+        Sandbox GoHighLevel · API v2 · en-tête 2021-07-28 · jeton de sous-compte, jamais commité.
+      </p>`,
+  },
+  {
+    id: "console",
+    section: "Produit",
+    title: "Un poste de pilotage",
+    seconds: 40,
+    html: () => `
+      <p class="kicker">La console</p>
+      <h2>Un poste de pilotage, pas un tableau de bord décoratif</h2>
+      <div class="row">
+        <div class="col">
+          <div class="shot"><img src="img/health.png" alt="Bandeau de santé des intégrations"></div>
+          <p class="tiny" style="margin-top:1cqh">Chaque tuile interroge réellement le service : GHL, n8n, base, LLM.</p>
+        </div>
+        <div class="col">
+          <div class="shot"><img src="img/projects.png" alt="Parcours des projets"></div>
+          <p class="tiny" style="margin-top:1cqh">Parcours : où en est chaque lead, et l’action attendue.</p>
+        </div>
+      </div>`,
+  },
+  {
+    id: "guardian",
+    section: "Qualité",
+    title: "Quality Guardian",
+    seconds: 35,
+    html: () => `
+      <p class="kicker">Quality Guardian</p>
+      <h2>Ce qui ne se voit pas dans un CRM, et qui coûte cher</h2>
+      <div class="grid2">
+        ${card("Sur le parcours", "visite en retard · estimé sans validation · estimé sans réponse · contrat signé sans transfert · transfert en échec")}
+        ${card("Sur l’intégration", "étape CRM en échec · lead non traité · revue qui traîne · doublon rejoué · analyse incomplète")}
+      </div>
+      <p class="quote" style="margin-top:3cqh">
+        Le Guardian n’envoie rien au client : il alerte en interne, et peut rejouer
+        une synchronisation manquée.
+      </p>
+      <p class="tiny" style="margin-top:1.4cqh">Chaque alerte a un code stable, un message en français et une piste d’audit.</p>`,
+  },
+  {
+    id: "qualite",
+    section: "Ingénierie",
+    title: "229 tests, et trois bugs réels",
+    seconds: 40,
+    html: () => `
+      <p class="kicker">Qualité</p>
+      <h2>229 tests, et des garde-fous qui ont trouvé de vrais bugs</h2>
+      <div class="grid3">
+        ${card("229 tests", "unitaires, intégration (respx), e2e sur l’API ASGI, pages de la console")}
+        ${card("ruff + mypy", "typage strict sur <span class='mono'>app/</span>, format imposé")}
+        ${card("SQLite &amp; PostgreSQL", "même suite, deux moteurs, migrations Alembic vérifiées")}
+      </div>
+      <div class="card soft" style="margin-top:2.4cqh">
+        <h3>Trois défauts attrapés avant la production</h3>
+        <ul class="small" style="margin-top:.8cqh">
+          <li>une colonne <span class="mono">updated_at</span> NOT NULL en migration mais absente du modèle : invisible en SQLite, bloquant en PostgreSQL</li>
+          <li>des champs personnalisés envoyés au mauvais format : GHL répondait « succès » et n’enregistrait rien</li>
+          <li>un jeton d’agence utilisé pour des contacts : 401 silencieux, la tuile disait « simulation » sans dire pourquoi</li>
+        </ul>
+      </div>`,
+  },
+  {
+    id: "methode",
+    section: "Méthode",
+    title: "Ce que j’ai fait",
+    seconds: 35,
+    html: () => `
+      <p class="kicker">Méthode</p>
+      <h2>Ce que j’ai fait, concrètement</h2>
+      <ul>
+        <li>Cahier des charges, choix d’architecture, modèle de données, migrations.</li>
+        <li>Client GoHighLevel typé (v2), vérifié contre la documentation 2021-07-28, mode mock et mode réel.</li>
+        <li>Moteur de règles déterministe, 14 scénarios métier, réponses attendues automatisées.</li>
+        <li>Workflows n8n exportés sans secret, importables par API, auditables.</li>
+        <li>Console FastAPI + Jinja2, sans framework front : design system, navigation clavier, impression.</li>
+        <li>Documentation d’exploitation : GHL, n8n, déploiement, sécurité, dépannage, plan de test.</li>
+      </ul>
+      <p class="tiny" style="margin-top:1.6cqh">Un dépôt unique : application, workflows, migrations, tests, docs, captures.</p>`,
+  },
+  {
+    id: "limites",
+    section: "Limites",
+    title: "Ce que le PoC ne fait pas",
+    seconds: 30,
+    html: () => `
+      <p class="kicker">Limites assumées</p>
+      <h2>Ce que le PoC ne fait pas — et pourquoi c’est dit</h2>
+      <table>
+        <tr><th>Sujet</th><th>État</th><th>Raison</th></tr>
+        <tr><td>Prix, remise, conditions</td><td>${pill("absent", "warn")}</td><td>risque commercial : seul un humain chiffre</td></tr>
+        <tr><td>Courriels au client</td><td>${pill("désactivé", "warn")}</td><td>PoC : aucun message sortant</td></tr>
+        <tr><td>Formulaire GHL natif</td><td>${pill("optionnel", "info")}</td><td>le formulaire de démo est servi par LeadGuard, même payload ; l’automation GHL reste à créer dans l’interface</td></tr>
+        <tr><td>Appel manqué, dépôts, satisfaction</td><td>${pill("roadmap", "mock")}</td><td>ne bloque pas les six flux livrés</td></tr>
+        <tr><td>Clés LLM réelles</td><td>${pill("offline", "mock")}</td><td>extracteur déterministe en attendant</td></tr>
+      </table>`,
+  },
+  {
+    id: "suite",
+    section: "Suite",
+    title: "Ce que je cherche",
+    seconds: 25,
+    html: () => `
+      <p class="kicker">La suite</p>
+      <h2>Ce que je cherche, et ce que ça dit de ma façon de travailler</h2>
+      <div class="grid2">
+        ${card("Ce que je cherche", "un poste de développeuse Full Stack Python où l’intégration et la fiabilité comptent : CRM, API, automatisation, IA appliquée.")}
+        ${card("Ce que ce PoC démontre", "je pars d’un problème métier, je choisis une architecture, je livre, je teste, je documente — et je dis ce qui ne marche pas.")}
+      </div>
+      <p class="quote" style="margin-top:2.8cqh">
+        Le code est lisible, les décisions sont justifiées, et chaque affirmation de ce
+        dossier a une preuve à l’écran.
+      </p>`,
+  },
+  {
+    id: "merci",
+    tone: "dark",
+    section: "Merci",
+    title: "On en parle ?",
+    seconds: 15,
+    html: () => `
+      <p class="kicker" style="color:#7dd3fc">Merci</p>
+      <h1 style="color:#fff;font-size:clamp(30px,3.6cqw,54px);max-width:22ch">On en parle&nbsp;?</h1>
+      <p class="lead" style="color:#c7d2e5;font-size:clamp(15px,1.5cqw,21px);max-width:52ch">
+        Démonstration en direct, code et documentation sur demande.<br>
+        Le PoC tourne, les tests passent, chaque chiffre est vérifiable.
+      </p>
+      <p class="tiny" style="margin-top:3cqh">Hafida El-Mouden · Berrechid, Maroc · hafida.el-mouden@uit.ac.ma</p>`,
+  },
+];
+
+const TOTAL_SECONDS = SLIDES.reduce((total, slide) => total + slide.seconds, 0);
+
+const CUE_TIMES = SLIDES.reduce((cues, slide, index) => {
+  const previous = index === 0 ? 0 : cues[index - 1];
+  cues.push(previous + slide.seconds);
+  return cues;
+}, []);
+
+
+// ---- notes (notes.js) ----
+
+/**
+ * Notes du présentateur — jamais montrées sur la slide, uniquement en mode
+ * « speaker ». Elles servent à tenir le temps et à ne pas réciter.
+ *
+ * guide  : ce qu'il faut montrer ou faire
+ * speech : la phrase à dire (elle peut être lue telle quelle)
+ * key    : la phrase qui doit rester
+ * avoid  : ce qu'il ne faut pas dire
+ */
+
+const NOTES = {
+  ouverture: {
+    guide: "Rester sur le titre, souris immobile. Afficher le badge MOCK MODE si la console est ouverte.",
+    speech:
+      "Je m'appelle Hafida El-Mouden, développeuse Full Stack Python. Je vais vous montrer un proof of concept personnel que j'ai conçu et développé seule : une couche de qualification et de contrôle qualité pour GoHighLevel. Les deux marques que vous verrez sont fictives, les données sont synthétiques.",
+    key: "PoC personnel, données synthétiques : rien ici n'est un client réel.",
+    show: ["le titre", "le badge MOCK MODE en fond si la console est ouverte"],
+    avoid: ["dire 'mon entreprise'", "laisser croire à une implantation client"],
+    next: "Le problème métier, en une slide.",
+  },
+  probleme: {
+    guide: "Suivre les trois cartes de gauche à droite, sans les lire mot à mot.",
+    speech:
+      "Une demande de rénovation se perd entre le formulaire, le téléphone et le CRM. Selon qui répond, le budget n'est pas demandé ; la visite technique se planifie sur un dossier vide ; et quand le lead est perdu, personne ne sait si c'est un oubli, un manque de qualification ou une intégration cassée.",
+    key: "Le CRM dit ce qui s'est passé ; il ne dit pas si l'intégration a tenu.",
+    show: ["les trois cartes", "la citation en bas"],
+    avoid: ["inventer des chiffres de marché", "parler de prix"],
+    next: "Ce que le système est — et ce qu'il n'est pas.",
+  },
+  positionnement: {
+    guide: "Le positionnement est la question qu'un recruteur pose en premier. Répondre avant qu'il la pose.",
+    speech:
+      "Je précise tout de suite : ce n'est pas un second CRM. GoHighLevel garde les contacts, les pipelines, les tags, les notes. Ce que j'ajoute, c'est la décision : analyse IA, règles déterministes, idempotence, revue humaine, et la supervision de l'intégration elle-même.",
+    key: "GoHighLevel reste la source de vérité business.",
+    show: ["les deux colonnes côte à côte"],
+    avoid: ["dire 'j'ai remplacé leur CRM'"],
+    next: "L'architecture, avec les frontières.",
+  },
+  architecture: {
+    guide: "Insister sur les frontières, pas sur les boîtes : c'est ce qui distingue un schéma utile d'un schéma décoratif.",
+    speech:
+      "n8n orchestre, il ne décide pas. GoHighLevel capture, il ne décide pas. FastAPI est la seule brique qui choisit la route, et PostgreSQL garde la preuve. Le LLM extrait une structure ; il n'accorde jamais une qualification et il ne produit aucun prix.",
+    key: "Le LLM propose, le code décide.",
+    show: ["les quatre boîtes", "les trois cartes qui nomment les interdits"],
+    avoid: ["détailler les versions de bibliothèques ici"],
+    next: "Le parcours métier en six étapes.",
+  },
+  parcours: {
+    guide: "C'est la slide qui vend le projet. Parcourir les six lignes de haut en bas, une phrase chacune.",
+    speech:
+      "Le parcours complet : qualification, revue humaine si nécessaire, visite de site, estimé validé par un humain, opportunité acceptée, transfert à l'atelier. À chaque étape, ce qui est garanti est écrit en face — pas une promesse, une règle tenue par le code.",
+    key: "Six étapes, six garanties, une ligne d'audit par transition.",
+    show: ["le tableau", "la ligne de garantie de l'estimé"],
+    avoid: ["détailler les 14 étapes du pipeline ici, c'est la slide suivante"],
+    next: "Ce que le système s'interdit.",
+  },
+  "garde-fous": {
+    guide: "Slide à dire lentement. Ce sont les interdits qui rassurent, pas les fonctions.",
+    speech:
+      "Ce que le système s'interdit : aucun prix — le schéma n'a pas de champ pour cela, le montant d'un estimé est tapé par un humain et approuvé par un humain. Aucun message client : en mode démo, l'envoi produit une trace et rien ne part. Et une injection de prompt ne change pas la décision : elle déclenche une revue de sécurité.",
+    key: "Aucun prix, aucun message, aucune décision sans humain.",
+    show: ["les quatre cartes", "la citation sur l'injection de prompt"],
+    avoid: ["dire que c'est 'sécurisé' sans dire contre quoi"],
+    next: "La preuve chez GoHighLevel.",
+  },
+  preuve: {
+    guide: "Ouvrir GHL à côté si possible : pipeline, champs, opportunité. Sinon, lire les chiffres.",
+    speech:
+      "Ce n'est pas une maquette. Le pipeline a 14 étapes, 19 champs personnalisés et 8 tags ont été créés par API, et un lead réel est arrivé dans la sandbox : contact avec 10 tags et 18 champs, opportunité placée à Site Visit To Schedule, une note d'analyse et une tâche pour l'équipe.",
+    key: "Le même code tourne en mode simulé et en mode réel.",
+    show: ["les trois chiffres", "la carte 'un lead réel'"],
+    avoid: ["montrer un jeton ou un identifiant de compte"],
+    next: "La console.",
+  },
+  console: {
+    guide: "Cliquer sur /diagnostic ou /projects si la démo est ouverte ; sinon commenter les deux captures.",
+    speech:
+      "La console n'est pas un tableau de bord décoratif : chaque tuile interroge réellement le service. Et la page Parcours répond à la question du commercial : où en est ce lead, et quelle action est attendue maintenant.",
+    key: "Une console qui dit la vérité sur son propre état.",
+    show: ["le bandeau de santé", "la liste des parcours"],
+    avoid: ["zoomer sur des données personnelles"],
+    next: "Le Guardian.",
+  },
+  guardian: {
+    guide: "C'est la partie la plus originale : marteler que personne ne surveille ce trou-là.",
+    speech:
+      "Le Guardian regarde ce qu'aucun CRM ne regarde : une visite dont l'heure est passée, un estimé qui attend une validation depuis 24 heures, un contrat signé sans transfert à l'atelier, une synchronisation CRM en échec. Il n'envoie rien au client : il alerte en interne et peut rejouer une synchronisation.",
+    key: "Le Guardian surveille le processus, pas le client.",
+    show: ["les deux cartes", "la citation"],
+    avoid: ["promettre des alertes SMS"],
+    next: "Les tests, et ce qu'ils ont attrapé.",
+  },
+  qualite: {
+    guide: "Assumer les bugs trouvés : c'est la slide la plus crédible pour une équipe technique.",
+    speech:
+      "229 tests, ruff et mypy propres, la même suite sur SQLite et PostgreSQL. Et trois vrais défauts attrapés par les garde-fous : une colonne obligatoire absente du modèle — invisible en SQLite, bloquante en PostgreSQL ; des champs personnalisés qui partaient au mauvais format, GHL répondait succès et n'enregistrait rien ; un jeton d'agence utilisé pour des contacts.",
+    key: "Les tests n'ont pas validé le code, ils ont trouvé ses erreurs.",
+    show: ["les trois cartes", "la liste des trois bugs"],
+    avoid: ["dire 'aucun bug'"],
+    next: "La méthode.",
+  },
+  methode: {
+    guide: "Rythme rapide, c'est la slide des preuves de travail.",
+    speech:
+      "Le cahier des charges, l'architecture, le client GoHighLevel typé et vérifié contre la documentation 2021-07-28, le moteur de règles, les workflows n8n exportés sans secret, la console en Jinja2 sans framework front, et la documentation d'exploitation.",
+    key: "Un dépôt, une histoire : application, workflows, tests, docs.",
+    show: ["la liste"],
+    avoid: ["lister des technologies non utilisées"],
+    next: "Les limites, dites franchement.",
+  },
+  limites: {
+    guide: "Ne pas s'excuser : annoncer les limites comme des décisions.",
+    speech:
+      "Ce que le PoC ne fait pas, et pourquoi c'est écrit : pas de prix, pas de courriel client, le formulaire et le workflow GHL restent à configurer dans l'interface, et trois flux du cahier des charges sont au roadmap. Rien de tout cela ne bloque les six flux livrés.",
+    key: "Une limite annoncée vaut mieux qu'une promesse floue.",
+    show: ["le tableau, colonne État"],
+    avoid: ["minimiser", "sur-promettre une date"],
+    next: "Ce que je cherche.",
+  },
+  suite: {
+    guide: "Regarder l'interlocuteur, pas l'écran.",
+    speech:
+      "Ce que je cherche : un poste où l'intégration et la fiabilité comptent. Ce que ce PoC démontre : je pars d'un problème métier, je choisis une architecture, je livre, je teste, je documente, et je dis ce qui ne marche pas.",
+    key: "Je livre, et je dis la vérité sur ce que j'ai livré.",
+    show: ["les deux cartes"],
+    avoid: ["négocier le salaire ici"],
+    next: "Merci, et les questions.",
+  },
+  merci: {
+    guide: "Laisser la slide à l'écran pendant les questions.",
+    speech: "Merci. Je peux ouvrir le code, la démo, ou détailler n'importe quelle décision.",
+    key: "Trois portes d'entrée : la démo, le code, la documentation.",
+    show: ["le contact"],
+    avoid: ["rester sur la slide du dossier pendant les questions"],
+    next: "",
+  },
+};
+
+
+// ---- moteur (deck.js) ----
+
+/**
+ * Moteur du deck : un seul conteneur, un routeur par hash, cinq modes.
+ *
+ *   #/s/3          présentation, slide 3
+ *   #/speaker/3    présentateur (slide + script privé)
+ *   #/rehearsal    chronomètre total + repères
+ *   #/print        toutes les slides empilées, une par page
+ *   #/notes        le script en document lisible
+ *   ?mode=print    même chose au chargement : c'est ce que Chrome imprime en PDF
+ *
+ * Aucune dépendance : modules ES natifs, servis par l'application.
+ */
+
+
+
+const stage = document.getElementById("stage");
+const hud = document.getElementById("hud");
+const printStack = document.getElementById("print");
+const notesDoc = document.getElementById("notes-doc");
+
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+/** Rendu d'une slide dans un conteneur donné. */
+function renderSlide(slide, index, container) {
+  const section = document.createElement("section");
+  // La variante sombre (ouverture, clôture) vient des données, pas du moteur.
+  section.className = slide.tone === "dark" ? "slide title-slide" : "slide";
+  section.dataset.id = slide.id;
+  section.setAttribute("aria-label", `${index + 1}. ${slide.title}`);
+  section.innerHTML = slide.html();
+  container.append(section);
+  return section;
+}
+
+const slides = SLIDES.map((slide, index) => renderSlide(slide, index, stage));
+
+/** HUD : section, compteur, progression et navigation. */
+function paintHud(index) {
+  const slide = SLIDES[index];
+  hud.querySelector(".section").textContent = slide.section;
+  hud.querySelector(".counter").textContent = `${index + 1} / ${SLIDES.length}`;
+  hud.querySelector(".progress i").style.width = `${((index + 1) / SLIDES.length) * 100}%`;
+  hud.querySelector("[data-prev]").disabled = index === 0;
+  hud.querySelector("[data-next]").disabled = index === SLIDES.length - 1;
+  document.title = `${slide.title} · LeadGuard AI`;
+}
+
+function show(index, { animate = true } = {}) {
+  const target = clamp(index, 0, SLIDES.length - 1);
+  slides.forEach((section, position) => {
+    section.hidden = position !== target;
+  });
+  const current = slides[target];
+  if (animate) {
+    current.animate(
+      [
+        { opacity: 0, transform: "translateY(14px)" },
+        { opacity: 1, transform: "translateY(0)" },
+      ],
+      { duration: 260, easing: "cubic-bezier(.22,.61,.36,1)" },
+    );
+  }
+  paintHud(target);
+  return target;
+}
+
+// --------------------------------------------------------------------- modes
+
+let mode = "presentation";
+let index = 0;
+
+function setMode(nextMode, nextIndex = index) {
+  mode = nextMode;
+  document.body.classList.toggle("speaker", mode === "speaker");
+  document.body.classList.toggle("print", mode === "print");
+  notesDoc.hidden = mode !== "notes";
+  printStack.hidden = mode !== "print";
+  stage.hidden = mode === "print" || mode === "notes";
+  hud.hidden = mode === "print" || mode === "notes";
+  if (mode === "print") renderPrint();
+  if (mode === "notes") renderNotes();
+  if (mode === "speaker") renderNotesPanel(nextIndex);
+  index = show(nextIndex, { animate: mode === "presentation" });
+  if (mode !== "rehearsal") stopTimer();
+  if (mode === "rehearsal") startTimer();
+}
+
+function renderPrint() {
+  if (printStack.dataset.ready === "1") return;
+  SLIDES.forEach((slide, position) => {
+    const section = document.createElement("section");
+    section.className = "print-slide";
+    const tone = slide.tone === "dark" ? " title-slide" : "";
+    section.innerHTML = `<div class="slide${tone}" style="position:absolute;inset:0;padding:48px 56px">${slide.html()}</div>`;
+    printStack.append(section);
+  });
+  printStack.dataset.ready = "1";
+}
+
+function renderNotes() {
+  if (notesDoc.dataset.ready === "1") return;
+  notesDoc.innerHTML = [
+    `<h1 style="color:#fff;margin:0 0 6px">Script · LeadGuard AI</h1>`,
+    `<p style="color:#94a3b8;margin:0 0 26px">${SLIDES.length} slides · ${format(TOTAL_SECONDS)} au total</p>`,
+    ...SLIDES.map((slide, position) => {
+      const note = NOTES[slide.id] || {};
+      return `
+        <article style="background:#fff;color:#1e293b;border-radius:12px;padding:18px 22px;margin-bottom:14px">
+          <h2 style="font-size:16px;margin:0 0 4px;color:#0f172a">
+            ${position + 1}. ${slide.title}
+            <span style="font-weight:500;color:#64748b;font-size:13px"> — ${slide.section} · ${format(slide.seconds)}</span>
+          </h2>
+          <p style="margin:6px 0;font-size:14px"><strong>Montrer :</strong> ${(note.show || []).join(" · ") || "—"}</p>
+          <p style="margin:6px 0;font-size:14px">${note.speech || ""}</p>
+          <p style="margin:6px 0;font-size:13.5px;border-left:3px solid #7c3aed;padding-left:10px"><strong>À retenir :</strong> ${note.key || "—"}</p>
+          <p style="margin:6px 0;font-size:13px;color:#b45309"><strong>Éviter :</strong> ${(note.avoid || []).join(" · ") || "—"}</p>
+        </article>`;
+    }),
+  ].join("");
+  notesDoc.dataset.ready = "1";
+}
+
+// ---------------------------------------------------------------- présentateur
+
+let panel;
+
+function renderNotesPanel(position) {
+  if (!panel) {
+    panel = document.createElement("aside");
+    panel.className = "notes-panel";
+    document.querySelector(".app").append(panel);
+  }
+  const slide = SLIDES[position];
+  const note = NOTES[slide.id] || {};
+  panel.innerHTML = `
+    <h3>${position + 1}. ${slide.title}</h3>
+    <p><strong>Montrer :</strong> ${(note.show || []).join(" · ") || "—"}</p>
+    <p>${note.speech || ""}</p>
+    <p class="key">À retenir : ${note.key || "—"}</p>
+    <p style="color:#b45309"><strong>Éviter :</strong> ${(note.avoid || []).join(" · ") || "—"}</p>
+    <p class="tiny">Suivant : ${note.next || "fin"} · ${format(slide.seconds)} prévues</p>`;
+}
+
+// ----------------------------------------------------------------- chronomètre
+
+let timerId = null;
+let startedAt = 0;
+
+function format(seconds) {
+  const value = Math.max(0, Math.round(seconds));
+  return `${Math.floor(value / 60)}:${String(value % 60).padStart(2, "0")}`;
+}
+
+function startTimer() {
+  stopTimer();
+  startedAt = performance.now();
+  const badge = document.createElement("div");
+  badge.className = "timer";
+  badge.id = "timer";
+  document.body.append(badge);
+  timerId = setInterval(() => {
+    const elapsed = (performance.now() - startedAt) / 1000;
+    const remaining = TOTAL_SECONDS - elapsed;
+    const cue = CUE_TIMES.filter((cueTime) => cueTime <= elapsed).length;
+    badge.textContent = `${format(elapsed)} écoulées · ${format(remaining)} restantes · slide ${clamp(cue + 1, 1, SLIDES.length)}/${SLIDES.length}`;
+    badge.className = "timer" + (remaining < 0 ? " over" : remaining < 60 ? " warn" : "");
+  }, 250);
+}
+
+function stopTimer() {
+  if (timerId) clearInterval(timerId);
+  timerId = null;
+  document.getElementById("timer")?.remove();
+}
+
+// -------------------------------------------------------------------- routeur
+
+function route() {
+  const query = new URLSearchParams(location.search);
+  if (query.get("mode") === "print") {
+    setMode("print", 0);
+    return;
+  }
+  const [, kind, value] = location.hash.replace(/^#\/?/, "/").split("/");
+  const position = Number.parseInt(value || "0", 10);
+  switch (kind) {
+    case "speaker":
+      setMode("speaker", Number.isFinite(position) ? position - 1 : index);
+      break;
+    case "rehearsal":
+      setMode("rehearsal", 0);
+      break;
+    case "print":
+      setMode("print", 0);
+      break;
+    case "notes":
+      setMode("notes", 0);
+      break;
+    case "s":
+      setMode("presentation", Number.isFinite(position) ? position - 1 : index);
+      break;
+    default:
+      setMode("presentation", 0);
+  }
+}
+
+function go(delta) {
+  const target = clamp(index + delta, 0, SLIDES.length - 1);
+  if (target === index) return;
+  if (mode === "print" || mode === "notes") setMode("presentation", target);
+  else {
+    index = show(target);
+    if (mode === "speaker") renderNotesPanel(index);
+  }
+  history.replaceState(null, "", `#/s/${index + 1}`);
+}
+
+// ------------------------------------------------------------------ entrées
+
+document.addEventListener("keydown", (event) => {
+  const keys = ["ArrowRight", "ArrowLeft", " ", "PageDown", "PageUp", "Home", "End"];
+  if (keys.includes(event.key)) event.preventDefault();
+  switch (event.key) {
+    case "ArrowRight":
+    case "PageDown":
+    case " ":
+      go(1);
+      break;
+    case "ArrowLeft":
+    case "PageUp":
+    case "Backspace":
+      go(-1);
+      break;
+    case "Home":
+      setMode(mode === "speaker" ? "speaker" : "presentation", 0);
+      break;
+    case "End":
+      setMode(mode === "speaker" ? "speaker" : "presentation", SLIDES.length - 1);
+      break;
+    case "f":
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+      break;
+    case "s":
+      location.hash = `#/speaker/${index + 1}`;
+      break;
+    case "r":
+      location.hash = "#/rehearsal";
+      break;
+    case "p":
+      location.hash = "#/print";
+      break;
+    case "n":
+      location.hash = "#/notes";
+      break;
+    case "Escape":
+      if (location.hash) location.hash = "";
+      break;
+    case "?":
+      alert(
+        "Flèches / espace : naviguer\nHome / Fin : début, fin\nf : plein écran\ns : mode présentateur\nr : répétition chronométrée\np : mode impression (PDF)\nn : script complet",
+      );
+      break;
+    default:
+      break;
+  }
+});
+
+hud.querySelector("[data-prev]").addEventListener("click", () => go(-1));
+hud.querySelector("[data-next]").addEventListener("click", () => go(1));
+window.addEventListener("hashchange", route);
+
+route();
+
+</script>
+</body>
+</html>
