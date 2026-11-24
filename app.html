@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LeadGuard AI — la console en images</title>
+<style>
+  :root {
+    --bg: #080d1a; --panel: #0f172a; --line: #1e293b; --text: #e2e8f0;
+    --muted: #94a3b8; --cyan: #22d3ee;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: radial-gradient(1100px 520px at 12% -8%, #11203a 0%, var(--bg) 58%);
+    color: var(--text); font-family: "Segoe UI", Inter, system-ui, sans-serif;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 46px 24px 72px; }
+  .kicker {
+    display: inline-block; font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--cyan); border: 1px solid #164e63; background: #0c2434;
+    padding: 6px 12px; border-radius: 999px;
+  }
+  h1 { font-size: 30px; margin: 18px 0 10px; letter-spacing: -.02em; }
+  .lede { color: var(--muted); font-size: 15px; line-height: 1.65; max-width: 66ch; margin: 0 0 8px; }
+  nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 34px; }
+  nav a {
+    text-decoration: none; color: var(--text); font-size: 13px; padding: 8px 14px;
+    border: 1px solid var(--line); border-radius: 9px; background: #111c31;
+  }
+  nav a:hover { border-color: #334155; }
+  figure { margin: 0 0 44px; }
+  figure img {
+    width: 100%; height: auto; display: block; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--panel);
+  }
+  figcaption { margin-top: 12px; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  figcaption strong { color: var(--text); display: block; margin-bottom: 3px; font-size: 14.5px; }
+  .note {
+    border-left: 2px solid #164e63; padding: 2px 0 2px 14px; margin: 0 0 40px;
+    font-size: 13px; color: var(--muted);
+  }
+  footer { margin-top: 40px; font-size: 12px; color: #64748b; line-height: 1.7; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <span class="kicker">Console · captures d'écran</span>
+  <h1>LeadGuard AI — à quoi ressemble l'application</h1>
+  <p class="lede">
+    Qualification des demandes, revue humaine, parcours projet, Quality Guardian.
+    Les captures viennent de l'application en fonctionnement, avec les données
+    synthétiques de démonstration et un sous-compte GoHighLevel de test.
+  </p>
+  <p class="note">
+    Ce sont des captures fixes, pas une démonstration interactive : l'application
+    s'exécute avec son API et sa base. La démonstration en direct se fait en
+    partage d'écran.
+  </p>
+
+  <nav>
+    <a href="#dashboard">Tableau de bord</a>
+    <a href="#demande">Nouvelle demande</a>
+    <a href="#executions">Exécutions</a>
+    <a href="#parcours">Parcours projet</a>
+    <a href="#revue">Revue humaine</a>
+    <a href="#guardian">Quality Guardian</a>
+    <a href="#integrations">Intégrations</a>
+    <a href="#dossier">Le dossier</a>
+  </nav>
+
+  <figure id="dashboard">
+    <img src="captures/dashboard.png" alt="Tableau de bord de la console" loading="lazy">
+    <figcaption>
+      <strong>Tableau de bord</strong>
+      Santé des dépendances en haut (GoHighLevel, n8n, base, extracteur local), puis
+      l'activité : volumes par jour, répartition des décisions, files d'attente.
+      Chaque tuile interroge le service — aucune valeur n'est décorative.
+    </figcaption>
+  </figure>
+
+  <figure id="demande">
+    <img src="captures/demande.png" alt="Formulaire de demande de projet" loading="lazy">
+    <figcaption>
+      <strong>Nouvelle demande</strong>
+      Le formulaire envoie le même payload qu'un formulaire GoHighLevel : validation,
+      moteur de règles, synchronisation CRM. Un refus de validation nomme le champ
+      fautif au lieu d'un message générique.
+    </figcaption>
+  </figure>
+
+  <figure id="executions">
+    <img src="captures/executions.png" alt="Liste des exécutions" loading="lazy">
+    <figcaption>
+      <strong>Exécutions</strong>
+      Chaque demande traitée laisse une trace : route décidée, score, statut,
+      informations manquantes. C'est la piste d'audit du parcours.
+    </figcaption>
+  </figure>
+
+  <figure id="parcours">
+    <img src="captures/parcours.png" alt="Parcours projet" loading="lazy">
+    <figcaption>
+      <strong>Parcours projet</strong>
+      Visite, estimé, approbation, transfert vers l'atelier. Une seule action est
+      proposée à la fois, et elle dépend de l'état — pas de bouton qui laisse faire
+      n'importe quoi.
+    </figcaption>
+  </figure>
+
+  <figure id="revue">
+    <img src="captures/revue.png" alt="File de revue humaine" loading="lazy">
+    <figcaption>
+      <strong>Revue humaine</strong>
+      Les dossiers douteux arrivent avec leurs motifs et la lecture du modèle ;
+      la décision humaine est comparée à la proposition, et conservée.
+    </figcaption>
+  </figure>
+
+  <figure id="guardian">
+    <img src="captures/guardian.png" alt="Quality Guardian" loading="lazy">
+    <figcaption>
+      <strong>Quality Guardian</strong>
+      Les incidents portent sur le processus : visite en retard, estimé sans
+      validation, contrat sans transfert. Chacun est rattaché à une règle explicite.
+    </figcaption>
+  </figure>
+
+  <figure id="integrations">
+    <img src="captures/integrations.png" alt="État des intégrations" loading="lazy">
+    <figcaption>
+      <strong>Intégrations</strong>
+      Ce qui est réel et ce qui est simulé, au même endroit : GoHighLevel connecté,
+      n8n opérationnel, mode démonstration affiché. Une intégration non configurée
+      se voit au lieu de se deviner.
+    </figcaption>
+  </figure>
+
+  <figure id="dossier">
+    <img src="captures/dossier.png" alt="Couverture du dossier de présentation" loading="lazy">
+    <figcaption>
+      <strong>Le dossier</strong>
+      Quatorze slides qui racontent la même histoire : le problème, l'architecture,
+      la démonstration, les limites. <a href="./" style="color:var(--cyan)">Ouvrir le dossier</a>.
+    </figcaption>
+  </figure>
+
+  <footer>
+    Hafida El-Mouden — développeuse full stack Python · FastAPI, GoHighLevel, n8n, intégration IA.<br>
+    Données synthétiques ; aucune information client réelle.
+  </footer>
+</main>
+</body>
+</html>
